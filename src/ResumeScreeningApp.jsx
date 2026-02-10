@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   Users,
   FileText,
@@ -98,163 +97,9 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// WhatAIMissing Component (Second Page)
-const WhatAIMissing = ({ onBack, onContinue }) => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.18,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 25 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const problems = [
-    "Lack of emotional intelligence in AI-driven learning platforms.",
-    "Limited personalization based on student behavior and creativity.",
-    "Over-reliance on automation reduces human interaction.",
-    "Accessibility gaps for diverse learners.",
-    "Insufficient focus on critical thinking and real-world skills.",
-  ];
-
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#f4f2f8",
-        padding: "60px 140px",
-        fontFamily: "system-ui",
-      }}
-    >
-      {/* Logo */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          marginBottom: "40px",
-          fontWeight: 600,
-          color: "#6C63FF",
-          fontSize: "20px",
-        }}
-      >
-        🧠 FairGrade AI
-      </motion.div>
-
-      {/* Heading */}
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        style={{
-          fontSize: "44px",
-          marginBottom: "50px",
-        }}
-      >
-        What AI is Missing
-      </motion.h1>
-
-      {/* Animated Cards */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "22px",
-          maxWidth: "900px",
-        }}
-      >
-        {problems.map((text, index) => (
-          <motion.div
-            key={index}
-            variants={item}
-            whileHover={{
-              scale: 1.03,
-              backgroundColor: "#dcd6f7",
-            }}
-            style={{
-              padding: "22px 28px",
-              borderRadius: "18px",
-              background: "#e6e1f5",
-              fontSize: "18px",
-              cursor: "pointer",
-              transition: "0.2s",
-            }}
-          >
-            {text}
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Buttons */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        style={{
-          marginTop: "50px",
-          display: "flex",
-          gap: "20px",
-          alignItems: "center",
-        }}
-      >
-        <button
-          onClick={onBack}
-          style={{
-            background: "none",
-            border: "none",
-            color: "#6C63FF",
-            fontSize: "18px",
-            cursor: "pointer",
-          }}
-        >
-          ← Back
-        </button>
-        
-        <button
-          onClick={onContinue}
-          style={{
-            background: "linear-gradient(135deg, #8b5cf6, #7c3aed)",
-            color: "#fff",
-            border: "none",
-            padding: "14px 26px",
-            borderRadius: "12px",
-            cursor: "pointer",
-            fontSize: "16px",
-            fontWeight: "600",
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-            boxShadow: "0 4px 12px rgba(139, 92, 246, 0.3)",
-          }}
-        >
-          Continue to Solutions →
-        </button>
-      </motion.div>
-    </div>
-  );
-};
-
 // Main App Component
 const EduBridgeFullApp = () => {
   const [showHero, setShowHero] = useState(true);
-  const [showWhatAIMissing, setShowWhatAIMissing] = useState(false);
   const [currentPage, setCurrentPage] = useState('intro');
   const [sessionData, setSessionData] = useState({
     sessionId: null,
@@ -604,7 +449,7 @@ const EduBridgeFullApp = () => {
             style={styles.button}
             onClick={() => {
               setShowHero(false);
-              setShowWhatAIMissing(true);
+              setCurrentPage('intro');
             }}
             onMouseEnter={(e) => e.target.transform = 'translateY(-2px)'}
             onMouseLeave={(e) => e.target.transform = 'translateY(0)'}
@@ -616,9 +461,6 @@ const EduBridgeFullApp = () => {
       </div>
     );
   };
-
-  // Rest of the pages remain the same (IntroPage, DataUploadPage, etc.)
-  // I'll include the IntroPage with updated navigation
 
   const IntroPage = () => {
     const startSession = () => {
@@ -774,10 +616,7 @@ const EduBridgeFullApp = () => {
           </button>
 
           <button
-            onClick={() => {
-              setShowWhatAIMissing(true);
-              setCurrentPage('intro');
-            }}
+            onClick={() => setShowHero(true)}
             style={{
               marginTop: '1rem',
               width: '100%',
@@ -792,17 +631,14 @@ const EduBridgeFullApp = () => {
             onMouseEnter={(e) => e.target.color = '#111827'}
             onMouseLeave={(e) => e.target.color = '#4b5563'}
           >
-            ← Back to Overview
+            ← Back to Home
           </button>
         </div>
       </div>
     );
   };
 
-  // Include all other page components here (DataUploadPage, PreviewDataPage, etc.)
-  // They remain exactly the same as in your original code
-  // I'm only showing the key changes for navigation
-const DataUploadPage = () => {
+  const DataUploadPage = () => {
     const handleFileUpload = async (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -2476,28 +2312,10 @@ Jane Smith,jane@email.com,MBA Harvard (2020-2022),Consultant McKinsey (2022-2024
   };
 
   const renderContent = () => {
-    // Show hero page
-    if (showHero && !showWhatAIMissing) {
+    if (showHero) {
       return <HeroPage />;
     }
 
-    // Show WhatAIMissing page
-    if (showWhatAIMissing && currentPage === 'intro') {
-      return (
-        <WhatAIMissing
-          onBack={() => {
-            setShowWhatAIMissing(false);
-            setShowHero(true);
-          }}
-          onContinue={() => {
-            setShowWhatAIMissing(false);
-            setCurrentPage('intro');
-          }}
-        />
-      );
-    }
-
-    // Show screening system pages
     switch (currentPage) {
       case 'intro':
         return <IntroPage />;
